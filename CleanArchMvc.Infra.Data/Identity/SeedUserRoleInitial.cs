@@ -4,17 +4,19 @@ using System;
 
 namespace CleanArchMvc.Infra.Data.Identity
 {
-    public class SeedRoleInitial : ISeedUserRoleInitial
+    public class SeedUserRoleInitial : ISeedUserRoleInitial
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public SeedRoleInitial(RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManeger)
+
+        public SeedUserRoleInitial(RoleManager<IdentityRole> roleManager,
+              UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
-            _userManager = userManeger;
+            _userManager = userManager;
         }
-        public void SeedRoles()
+
+        public void SeedUsers()
         {
             if (_userManager.FindByEmailAsync("usuario@localhost").Result == null)
             {
@@ -55,7 +57,7 @@ namespace CleanArchMvc.Infra.Data.Identity
             }
         }
 
-        public void SeedUsers()
+        public void SeedRoles()
         {
             if (!_roleManager.RoleExistsAsync("User").Result)
             {
@@ -71,6 +73,6 @@ namespace CleanArchMvc.Infra.Data.Identity
                 role.NormalizedName = "ADMIN";
                 IdentityResult roleResult = _roleManager.CreateAsync(role).Result;
             }
-        }
+        }        
     }
 }
